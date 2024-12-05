@@ -1,6 +1,8 @@
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 
 public class LibraryManagementTest {
 
@@ -80,6 +82,19 @@ public class LibraryManagementTest {
 		
 			boolean returnAgainSuccessful = transaction.returnBook(book, member);
 			assertFalse("The book should not be available to return again", returnAgainSuccessful);
+		} catch (Exception e) {
+			fail("Exception thrown: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testSingletonTransaction() {
+		try {
+			Constructor<Transaction> constructor = Transaction.class.getDeclaredConstructor();
+			
+			int modifiers = constructor.getModifiers();
+			
+			assertEquals("The constructor should be private", Modifier.PRIVATE, modifiers);
 		} catch (Exception e) {
 			fail("Exception thrown: " + e.getMessage());
 		}
