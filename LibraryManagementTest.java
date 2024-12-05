@@ -5,10 +5,12 @@ import org.junit.Test;
 public class LibraryManagementTest {
 
 	private Library library;
+	private Transaction transaction;
 	
 	@Before
 	public void setUp() {
 		library = new Library();
+		transaction = Transaction.getTransaction();
 	}
 	
 	@Test
@@ -50,6 +52,36 @@ public class LibraryManagementTest {
 			fail("Exception should have been thrown for invalid book ID.");
 		} catch (Exception e) {
 			assertEquals("Invalid book ID.", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testBorrowReturn() {
+		try {
+			Book book = new Book(101, "Test Book");
+			Member member = new Member(1, "Cole Beemer");
+		
+			library.addBook(book);
+			library.addMember(member);
+		
+			assertTrue(book.isAvailable());
+		
+			boolean borrowSuccessful = transaction.borrowBook(book, member);
+			assertTrue("The book should be borrowed", borrowSuccessful);
+		
+			assertFalse(book.isAvailable());
+		
+			boolean borrowAgainSuccessful = transaction.borrowBook(book, member);
+			assertFalse("The book should not be available to borrow again", borrowAgainSuccessful);
+		
+			transaction.returnBook(book, member);
+		
+			assertTrue(book.isAvailable());
+		
+			boolean returnAgainSuccessful = transaction.returnBook(book, member);
+			assertFalse("The book should not be available to return again", returnAgainSuccessful);
+		} catch (Exception e) {
+			fail("Exception thrown: " + e.getMessage());
 		}
 	}
 }
