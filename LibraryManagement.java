@@ -117,7 +117,7 @@ public class LibraryManagement {
                     }
                     break;
                 case 6:
-                	System.out.println("Transaction history will be added later");
+                	transaction.displayTransactionHistory();
                     break;
                 case 7:
                     System.out.println("Exiting. Good Bye..");

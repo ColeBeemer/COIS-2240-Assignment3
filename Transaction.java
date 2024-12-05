@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -44,6 +46,18 @@ public class Transaction {
         } else {
             System.out.println("This book was not borrowed by the member.");
         }
+    }
+    
+    public void displayTransactionHistory() {
+    	try (BufferedReader reader = new BufferedReader(new FileReader("transactions.txt"))) {
+    		String line;
+    		System.out.println("\n--- Transaction History ---");
+    		while ((line = reader.readLine()) != null) {
+    			System.out.println(line);
+    		}
+    	} catch (IOException e) {
+    		System.out.println("Error reading transaction history: " + e.getMessage());
+    	}
     }
     
     private void saveTransaction(String transactionDetails) {
