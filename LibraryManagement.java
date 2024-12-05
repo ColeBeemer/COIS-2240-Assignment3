@@ -9,6 +9,7 @@ public class LibraryManagement {
 
     private void run() {
         Scanner scanner = new Scanner(System.in);
+        Transaction transaction = Transaction.getTransaction(); // Singleton instance
         boolean running = true;
 
         while (running) {
@@ -116,7 +117,7 @@ public class LibraryManagement {
                     }
                     break;
                 case 6:
-                	Transaction.displayTransactionHistory();
+                	System.out.println("Transaction history will be added later");
                     break;
                 case 7:
                     System.out.println("Exiting. Good Bye..");
